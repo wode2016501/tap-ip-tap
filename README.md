@@ -11,4 +11,4 @@ SERVER
 
 client
 
-./a.out  ip
+./a.out -a ip
