@@ -18,12 +18,21 @@
 #include <string.h>   //memset
 #include <arpa/inet.h> //ntohs
 #include "tap.h"
+int fzs(int  fd){
+
+        int flags =0;
+        flags = fcntl(fd,F_GETFL,0);
+
+        flags &= ~O_NONBLOCK;                                                     
+        fcntl(fd,F_SETFL,flags);
+}
 int readt(struct args *args){
 	int fd=0;
 	//fd=args->sock;
 	char buf[255];
 	int size =0;
 	while(1){
+		
 		memset(buf,0,255);
 		size=read(args->sock,buf,255);
 		if(size<0)exit(1);
@@ -235,6 +244,7 @@ int main(int argc, char *argv[])
 	printf("%s\n",args->dev);
 	//exit (1);
 	args->tap = tap_create(args);
+	fzs(args->tap);
 	//tap1 = tap_create("tap1", IFF_TAP | IFF_NO_PI);
 	//exit (1);
 	if (args->tap < 0) {
