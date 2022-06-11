@@ -244,13 +244,16 @@ int main(int argc, char *argv[])
 	printf("%s\n",args->dev);
 	//exit (1);
 	args->tap = tap_create(args);
-	fzs(args->tap);
 	//tap1 = tap_create("tap1", IFF_TAP | IFF_NO_PI);
 	//exit (1);
 	if (args->tap < 0) {
 		perror("错误： tap_create");
 		return 1;
 	}
+	fzs(args->tap);
+	char cmd[100];
+        sprintf( cmd ,"ifconfig %s up",args->dev);
+        system(cmd);
 	//exit (1);
 	printf("TAP name is %s\n", args->dev);
 	//exit (1);
